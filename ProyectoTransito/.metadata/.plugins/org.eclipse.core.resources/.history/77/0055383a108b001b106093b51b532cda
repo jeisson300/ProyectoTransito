@@ -1,0 +1,6 @@
+package project.transito.service;
+
+@Service
+public class ViaServiceImpl implements ViaService{
+
+}

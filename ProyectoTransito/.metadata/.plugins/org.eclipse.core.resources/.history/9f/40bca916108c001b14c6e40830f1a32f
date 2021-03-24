@@ -1,0 +1,16 @@
+package project.transito.models;
+
+import javax.persistence.Entity;
+
+@Entity
+@Data
+
+public class Historial {
+	
+		private int id;
+		
+		private int codigoAgente;
+		
+		private int codigoVia;
+
+}

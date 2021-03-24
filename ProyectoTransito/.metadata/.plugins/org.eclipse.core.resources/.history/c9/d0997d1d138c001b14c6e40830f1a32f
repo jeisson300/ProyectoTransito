@@ -1,0 +1,7 @@
+package project.transito.service;
+
+
+@Services
+public interface HistorialService {
+
+}

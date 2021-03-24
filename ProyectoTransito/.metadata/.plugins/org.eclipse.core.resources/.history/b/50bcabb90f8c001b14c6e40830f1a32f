@@ -1,0 +1,5 @@
+package project.transito.models;
+
+public class Historial {
+
+}

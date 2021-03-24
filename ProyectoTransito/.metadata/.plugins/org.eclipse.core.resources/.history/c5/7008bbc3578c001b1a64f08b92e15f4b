@@ -1,0 +1,37 @@
+package project.transito.models;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+import lombok.Data;
+
+@Entity
+@Data
+@NamedQueries({
+	@NamedQuery(name=Historial.LIST_CODE, query="select h.codigoVia from Historial h where h.codigoAgente= :code"),
+	@NamedQuery(name=Historial.LIST_CODE_AGENTE, query="select h.codigoAgente from Historial h where h.codigoVia= :code"),
+	@NamedQuery(name=Historial.DELETE_CODE_HISTORIAL, query="select h from Historial h where h.codigoAgente= :codeA and h.codigoV=codeV"),
+	
+})
+public class Historial {
+	
+		public static final String LIST_CODE ="LIST_CODE";
+		public static final String LIST_CODE_AGENTE="LIST_CODE_AGENTE";
+		public static final String DELETE_CODE_HISTORIAL="DELETE_CODE_HISTORIAL";
+		
+	
+	
+		@Id
+		@GeneratedValue(strategy = GenerationType.IDENTITY)
+		private int id;
+		
+		
+		private int codigoAgente;
+		
+		private int codigoVia;
+
+}

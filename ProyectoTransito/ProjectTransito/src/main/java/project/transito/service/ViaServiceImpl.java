@@ -1,0 +1,135 @@
+package project.transito.service;
+
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import project.transito.dao.ViaDao;
+
+import project.transito.models.Via;
+
+@Service
+public class ViaServiceImpl implements ViaService{
+	
+	//--inyeccion de dependecia
+	@Autowired
+	@Qualifier("viaDao")
+	public ViaDao viaDao;
+	
+	
+	@PersistenceContext
+	public EntityManager entityManager;
+	
+	//implementacion para agregar una via
+
+	@Override
+	@Transactional
+	public boolean add(Via via) {
+		// TODO Auto-generated method stub
+		boolean validar =false;
+		
+		if(search(via.getIdentificador())==null&&searchValidate(via.getCalleCarrera(), via.getNumero(), via.getTipo())==null&&via.getNivelCongestion()>=0&&via.getNivelCongestion()<=100)
+		{
+			viaDao.save(via);
+			validar=true;
+		}
+		return validar;
+	}
+	
+	
+	//implementacion  para borrar una via
+
+	@Override
+	@Transactional
+	public boolean delete(int code) {
+		// TODO Auto-generated method stub
+		boolean validar =false;
+		if(search(code)!=null)
+		{
+			viaDao.deleteById(code);;
+			validar=true;
+		}
+		return validar;
+	}
+	
+	//implementacion para actualizar una via
+
+	@Override
+	@Transactional
+	public boolean update(Via via) {
+		// TODO Auto-generated method stub
+		boolean validar =false;
+		if(search(via.getIdentificador())!=null&&via.getNivelCongestion()>=0&&via.getNivelCongestion()<=100)
+		{
+			entityManager.merge(via);
+			validar=true;
+		}
+		return validar;
+	}
+	
+	//implementacion para buscar una via
+
+	@Override
+	@Transactional
+	public Via search(int code) {
+		// TODO Auto-generated method stub
+		return viaDao.findById(code).orElse(null);
+	}
+	
+	//implementacion para listar vias
+
+	@Override
+	@Transactional
+	public List<Via> list() {
+		// TODO Auto-generated method stub
+		return viaDao.findAll();
+	}
+	
+	//implementacion para listar las vias con una congestion mayor a 30
+
+	@Override
+	@Transactional
+	public List<Via> listViaApto() {
+		// TODO Auto-generated method stub
+		TypedQuery<Via> v = entityManager.createNamedQuery(Via.LIST_VIA_APTAS, Via.class);
+		List<Via>viasAptas = v.getResultList();
+		return viasAptas;
+	}
+	
+	/*
+	 * implementacion de una validacion de via, 
+	 * la (calle o carrera) el numero y tipo son unicos para el registro de una via
+	 */
+	
+	@Override
+	@Transactional
+	public Via searchValidate(String tipoCalle , int numero, String tipo)
+	{
+		Via via = new Via();
+			try
+			{
+				TypedQuery<Via> v	= entityManager.createNamedQuery(Via.VALIDATE_VIA_PARAMS, Via.class);
+				v.setParameter("tipoCalle", tipoCalle);
+				v.setParameter("numero", numero);
+				v.setParameter("tipo", tipo);
+				via = v.getSingleResult();
+				
+			}catch(Exception e)
+			{
+				via = null;
+					
+			}
+			
+			return via;
+			
+	}
+
+}

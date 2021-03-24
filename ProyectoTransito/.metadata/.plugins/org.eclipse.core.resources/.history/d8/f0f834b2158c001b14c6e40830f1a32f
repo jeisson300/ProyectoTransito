@@ -1,0 +1,47 @@
+package project.transito.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Service;
+
+import project.transito.models.AgenteTransito;
+import project.transito.models.Historial;
+import project.transito.models.Via;
+
+@Service
+public class HistorialServiceImpl implements HistorialService{
+	
+	@PersistenceContext
+	public EntityManager entityManager;
+
+	@Override
+	@Transactional
+	public List<Via> listVias(int code) {
+		// TODO Auto-generated method stub
+		TypedQuery<Integer> v = entityManager.createNamedQuery(Historial.LIST_CODE, Integer.class);
+		v.setParameter("code", code);
+		List<Integer> codeVias = v.getResultList();
+		List<Via>vias = new ArrayList<>();
+		
+		for (Integer integer : codeVias) {
+			TypedQuery<Via>via = entityManager.createNamedQuery(, Via.class)
+			
+		}
+	
+		return codeVias;
+	}
+
+	@Override
+	@Transactional
+	public List<AgenteTransito> listAgente(int tipocalle, int numero) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

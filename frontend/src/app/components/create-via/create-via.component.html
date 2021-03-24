@@ -1,0 +1,70 @@
+<section class="container vh-100">
+
+    <div class="container mt-5 border rounded pb-4" >
+    <ng-container *ngIf="id==0 else box">
+        <h1 class="h3 text-center">Registro de Vias</h1>
+        <form  #viaForm="ngForm" (ngSubmit)="onSubmit(viaForm)">
+    
+            <label class="mt-4">Tipo</label>
+            <select class="form-select form-control" name="tipo" #tipo="ngModel" [(ngModel)]="via.tipo"  required>
+                <option value="Autopista">Autopista</option>
+                <option value="Carretera Principal">Carretera Principal</option>
+                <option value="Carretera Secundaria">Carretera Secundaria</option>
+            </select>
+           
+            <select class="form-select form-control mt-4" name="calleCarrera" #calleCarrera="ngModel" [(ngModel)]="via.calleCarrera" required>
+                <option value="Calle">Calle</option>
+                <option value="Carrera">Carrera</option>
+            </select>
+    
+            <label class="mt-4">Nivel  de congestion    Entre 0 - 100</label>
+            <input type="number"  name="nivelCongestion" #nivelCongestion="ngModel" class ="rounded border border-1   form-control" [(ngModel)]="via.nivelCongestion"  required/>
+            
+    
+            <label class="mt-4">Numero</label>
+            <input type="number" name="numero" #numero="ngModel" class ="rounded border border-1   form-control" [(ngModel)]="via.numero" required/>
+            
+            
+    
+            <div class="container mt-5">
+                <input type="submit" class="btn-primary rounded boder boder-1  mb-5" value="Enviar" [disabled]="!viaForm.form.valid">
+            </div>
+            
+        </form>
+    </ng-container>  
+     <ng-template #box>
+            <h1 class="h3 text-center">Actualizacion de la Via</h1>
+            <form  #viaForm="ngForm" (ngSubmit)="onSubmitActualizar(viaForm)">
+        
+                <label class="mt-4">Tipo</label>
+                <select class="form-select form-control" name="tipo" #tipo="ngModel" [(ngModel)]="via.tipo" value="{{via.tipo}}"  required>
+                    <option value="Autopista">Autopista</option>
+                    <option value="Carretera Principal">Carretera Principal</option>
+                    <option value="Carretera Secundaria">Carretera Secundaria</option>
+                </select>
+               
+                <select class="form-select form-control mt-4" name="calleCarrera" #calleCarrera="ngModel" [(ngModel)]="via.calleCarrera"  value="{{via.calleCarrera}}" required>
+                    <option value="Calle">Calle</option>
+                    <option value="Carrera">Carrera</option>
+                </select>
+        
+                <label class="mt-4">Nivel  de congestion</label>
+                <input type="number" name="nivelCongestion" #nivelCongestion="ngModel" class ="rounded border border-1   form-control" [(ngModel)]="via.nivelCongestion" placeholder="Entre 0 - 100" value={{via.nivelCongestion}} required/>
+                
+        
+                <label class="mt-4">Numero</label>
+                <input type="number" name="numero" #numero="ngModel" class ="rounded border border-1   form-control" [(ngModel)]="via.numero" value="{{via.numero}}" required/>
+                
+                
+        
+                <div class="container mt-5">
+                    <input type="submit" class="btn-primary rounded boder boder-1  mb-5" value="Actualizar" [disabled]="!viaForm.form.valid">
+                </div>
+                
+            </form>
+
+        </ng-template>
+    </div>
+
+    
+    </section>

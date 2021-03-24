@@ -1,0 +1,35 @@
+<section class="container">
+
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+
+                    <th>Identificador</th>
+                    <th>Tipo</th>
+                    <th>Calle o carrera</th>
+                    <th>Nivel de congestion</th>
+                    <th>Numero</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let v of vias">
+            <tr >
+                <th>{{v.identificador}}</th>
+                <th>{{v.tipo}}</th>
+                <th>{{v.calleCarrera}}</th>
+                <th>{{v.nivelCongestion}}</th>
+                <th>{{v.numero}}</th>
+                <th><button class="col btn btn-danger border rounded mx-2" (click)="eliminar(v.identificador)" >Eliminar</button></th>
+                <th><button class="col btn btn-primary border rounded mx-2" (click)="editar(v.identificador)">Editar</button></th>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <button class=" btn btn-primary border rounded mx-2" [routerLink]="['/crearVias']">+ Agregar una via</button>
+        <button class=" btn btn-primary border rounded mx-2"[routerLink]="['/agentes']">Agentes de transito</button>
+        <button class=" btn btn-primary border rounded mx-2"[routerLink]="['/asignaciones']">Historial  Vias</button>
+    </div>
+
+   
+</section>

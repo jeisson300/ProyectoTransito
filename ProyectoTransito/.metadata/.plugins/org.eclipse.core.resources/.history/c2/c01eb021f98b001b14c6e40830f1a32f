@@ -1,0 +1,50 @@
+package project.transito.models;
+
+import java.io.Serializable;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+
+import org.springframework.validation.annotation.Validated;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import lombok.Data;
+
+@Entity
+@Table(name = "agente_transito")
+@Data
+@Validated
+@NamedQueries({
+	
+	@NamedQuery(name =AgenteTransito.GET_AGENTE_CODIGO, query="select a from AgenteTransito a where a.codigoTransito =:codigo")
+})
+public class AgenteTransito implements Serializable {
+	
+	
+	private static final long serialVersionUID = -6490591971162162310L;
+
+
+
+	public static final String GET_AGENTE_CODIGO="GET_AGENTE_CODIGO";
+	
+	
+	@Id
+	private int codigo;
+	
+	@NotEmpty
+	private String nombre;
+	
+	private double yearExperience;
+	
+	@NotEmpty
+	private String codigoTransito;
+	
+	// @JsonBackReference
+	@ManyToOne
+	@JoinColumn(name="identificador")
+	private Via via;
+	
+	
+
+}

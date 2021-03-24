@@ -1,0 +1,27 @@
+package project.transito.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import project.transito.models.Via;
+
+@Service
+public interface ViaService {
+	
+	public boolean add(Via via);
+	
+	public boolean delete(int code);
+	
+	public boolean update(Via via);
+	
+	public Via search(int code);
+	
+	public List<Via> list();
+
+	public List<Via> listViaApto();
+	
+	public Via searchValidate(String tipoCalle , int numero,String tipo);
+	
+	
+}

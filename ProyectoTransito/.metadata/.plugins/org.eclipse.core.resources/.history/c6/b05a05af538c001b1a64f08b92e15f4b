@@ -1,0 +1,113 @@
+package project.transito.service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Service;
+
+import project.transito.models.AgenteTransito;
+import project.transito.models.Historial;
+import project.transito.models.Via;
+
+@Service
+public class HistorialServiceImpl implements HistorialService{
+	
+	@PersistenceContext
+	public EntityManager entityManager;
+	
+	public HistorialDao historialDao;
+	
+	public AgenteTransitoService agenteTransitoService;
+	
+	
+	//metodo para filtrar vias por medio del codigo del agente de transito
+	@Override
+	@Transactional
+	public List<Via> listVias(int code) {
+		// TODO Auto-generated method stub
+		List<Via>vias = new ArrayList<>();
+		try
+		{
+			TypedQuery<Integer> v = entityManager.createNamedQuery(Historial.LIST_CODE, Integer.class);
+			v.setParameter("code", code);
+			List<Integer> codeVias = v.getResultList();
+			
+			
+			for (Integer codigo : codeVias) {
+				TypedQuery<Via>via = entityManager.createNamedQuery(Via.LIST_VIA_CODE, Via.class);
+				via.setParameter("code", codigo);
+				vias.add(via.getSingleResult());
+			}
+			
+		}catch(Exception e)
+		{
+			vias = null;
+		}
+		
+	
+		return vias;
+	}
+
+	@Override
+	@Transactional
+	public List<AgenteTransito> listAgente(String tipocalle, int numero) {
+		// TODO Auto-generated method stub
+		List<Integer> codeAgentes = new ArrayList<>();
+		List<Integer>codeVias = new ArrayList<>();
+		List<AgenteTransito> agentes = new ArrayList<>();
+		try
+		{
+			TypedQuery<Integer>v = entityManager.createNamedQuery(Via.LIST_VIA_PARAMS, Integer.class);
+			v.setParameter("tipoCalle", tipocalle);
+			v.setParameter("numero", numero);
+			 codeVias =v.getResultList();
+			
+			
+			for (Integer codigo: codeVias)
+			{
+				TypedQuery<Integer> a= entityManager.createNamedQuery(Historial.LIST_CODE_AGENTE, Integer.class);
+				a.setParameter("code", codigo);
+				if(a.getResultList().size()>1)
+				{
+					codeAgentes = Stream.concat(codeAgentes.stream(), a.getResultList().stream()).collect(Collectors.toList());
+				}else 
+				{
+					codeAgentes.add(a.getSingleResult());
+				}
+				
+			}
+			
+			for (Integer code : codeAgentes) {
+				TypedQuery<AgenteTransito> a= entityManager.createNamedQuery(AgenteTransito.LIST_AGENTE_CODIGO, AgenteTransito.class);
+				a.setParameter("code", code);
+				agentes.add(a.getSingleResult());
+	
+			}
+					
+		}catch(Exception e)
+		{
+			System.out.println(e);
+			agentes = null;
+		}
+		
+		
+		return agentes;
+	}
+
+	@Override
+	public boolean delete(int code) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
+
+
+}

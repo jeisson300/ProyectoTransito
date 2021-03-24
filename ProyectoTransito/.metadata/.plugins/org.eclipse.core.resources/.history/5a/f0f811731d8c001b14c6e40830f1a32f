@@ -1,0 +1,101 @@
+package project.transito.service;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import project.transito.dao.ViaDao;
+
+import project.transito.models.Via;
+
+@Service
+public class ViaServiceImpl implements ViaService{
+	
+	
+	@Autowired
+	@Qualifier("viaDao")
+	public ViaDao viaDao;
+	
+	
+	@PersistenceContext
+	public EntityManager entityManager;
+
+	@Override
+	@Transactional
+	public boolean add(Via via) {
+		// TODO Auto-generated method stub
+		boolean validar =false;
+		
+		if(search(via.getIdentificador())==null)
+		{
+			viaDao.save(via);
+			validar=true;
+		}
+		return validar;
+	}
+
+	@Override
+	@Transactional
+	public boolean delete(int code) {
+		// TODO Auto-generated method stub
+		boolean validar =false;
+		if(search(code)!=null)
+		{
+			viaDao.deleteById(code);;
+			validar=true;
+		}
+		return validar;
+	}
+
+	@Override
+	@Transactional
+	public boolean update(Via via) {
+		// TODO Auto-generated method stub
+		boolean validar =false;
+		if(search(via.getIdentificador())!=null)
+		{
+			entityManager.merge(via);
+			validar=true;
+		}
+		return validar;
+	}
+
+	@Override
+	@Transactional
+	public Via search(int code) {
+		// TODO Auto-generated method stub
+		return viaDao.findById(code).orElse(null);
+	}
+
+	@Override
+	@Transactional
+	public List<Via> list() {
+		// TODO Auto-generated method stub
+		return viaDao.findAll();
+	}
+
+	@Override
+	@Transactional
+	public List<Via> listViaApto() {
+		// TODO Auto-generated method stub
+		TypedQuery<Via> v = entityManager.createNamedQuery(Via.LIST_VIA_APTAS, Via.class);
+		List<Via>viasAptas = v.getResultList();
+		return viasAptas;
+	}
+	
+	@Override
+	@Transactional
+	public Via searchValidate(String tipoCalle , int numero)
+	{
+		List<Via> vias = entityManager.createNamedQuery(Via.LIST_VIA_PARAMS, Via.class)
+		
+	}
+
+}

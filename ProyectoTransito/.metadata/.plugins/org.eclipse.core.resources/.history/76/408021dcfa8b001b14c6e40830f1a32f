@@ -1,0 +1,56 @@
+package project.transito.service;
+
+import java.util.List;
+
+import javax.persistence.*;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import project.transito.dao.HistoricoDao;
+import project.transito.models.AgenteTransito;
+import project.transito.models.Historial;
+import project.transito.models.Via;
+
+@Service
+public class HistoricoServiceImpl implements HistoricoService{
+	
+	@Autowired
+	@Qualifier("historicoDao")
+	public HistoricoDao historicoDao;
+	
+	@PersistenceContext
+	public EntityManager entityManager;
+
+	@Override
+	@Transactional
+	public boolean add(Historial historico) {
+		// TODO Auto-generated method stub
+		
+		boolean validar =false;
+		
+		historicoDao.save(historico);
+		validar = true;
+		return false;
+	}
+
+	@Override
+	@Transactional
+	public List<Via> listV(int code) {
+		// TODO Auto-generated method stub
+		TypedQuery<Via> v = entityManager.createNamedQuery(Historial.LIST_CODE_VIA, Via.class);
+		List<Via> viasAgente= v.getResultList();
+		return viasAgente;
+	}
+
+	@Override
+	@Transactional
+	public List<AgenteTransito> listA(int numero, String tipoCalle) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

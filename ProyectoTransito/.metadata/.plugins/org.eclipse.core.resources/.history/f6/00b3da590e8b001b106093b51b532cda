@@ -1,0 +1,10 @@
+package project.transito.dao;
+
+import org.springframework.stereotype.Component;
+
+import org.springframework.data.jpa.repository.config.JpaRepositoryConfigExtension;
+
+@Component
+public class ViaDao extends {
+
+}

@@ -1,0 +1,33 @@
+package project.transito.models;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+
+import org.springframework.validation.annotation.Validated;
+
+import lombok.Data;
+
+@Entity
+@Table(name = "agente_transito")
+@Data
+@Validated
+public class AgenteTransito {
+	
+	
+	@Id
+	private int codigo;
+	
+	@NotEmpty
+	private String nombre;
+	
+	private double añosExperiencia;
+	
+	@NotEmpty
+	private String codigoTransisto;
+	
+	@OneToOne
+	private Via via;
+	
+	
+
+}

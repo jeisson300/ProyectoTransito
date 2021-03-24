@@ -1,0 +1,6 @@
+package project.transito.dao;
+
+@Component
+public interface HistoricoDao {
+
+}

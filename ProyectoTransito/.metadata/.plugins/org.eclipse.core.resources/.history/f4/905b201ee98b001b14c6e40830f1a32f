@@ -1,0 +1,25 @@
+package project.transito.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import project.transito.models.AgenteTransito;
+
+@Service
+public interface AgenteTransitoService {
+	
+	public boolean add(AgenteTransito agenteTransito);
+	
+	public boolean delete(int code);
+	
+	public boolean update(AgenteTransito agenteTransito);
+	
+	public AgenteTransito search(int code);
+	
+	public List<AgenteTransito> list();
+	
+	public AgenteTransito validateCodeT();
+	
+
+}

@@ -1,0 +1,14 @@
+package project.transito.service;
+
+import org.springframework.stereotype.Service;
+
+import project.transito.models.Historico;
+
+@Service
+public interface HistoricoService {
+	
+	public boolean add(Historico historico);
+	
+	public List<Via> listCode (int code);
+
+}

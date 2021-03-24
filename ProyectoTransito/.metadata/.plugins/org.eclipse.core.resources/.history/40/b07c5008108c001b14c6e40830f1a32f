@@ -1,0 +1,15 @@
+package project.transito.models;
+
+
+
+
+
+public class Historial {
+	
+		private int id;
+		
+		private int codigoAgente;
+		
+		private int codigoVia;
+
+}

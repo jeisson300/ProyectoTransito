@@ -1,0 +1,8 @@
+package project.transito.dao;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class ViaDao extends Jpare{
+
+}

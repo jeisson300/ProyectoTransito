@@ -1,0 +1,74 @@
+<section class="container vh-100">
+
+<div class="container mt-5 border rounded pb-4">
+    <ng-container *ngIf="code==0 else box">
+        <h1 class="h3 text-center">Registro de Agente de transito</h1>
+        <form  #agenteForm="ngForm" (ngSubmit)="onSubmit(agenteForm)">
+
+            <label>Vias disponibles</label>
+            <select class="form-select form-control" name="identificador" #identificador="ngModel" [(ngModel)]="via.identificador"   required>
+                <option value={{v.identificador}} *ngFor="let v of vias">{{v.identificador}}  {{v.calleCarrera}}  {{v.numero}}</option>    
+            </select>
+
+            <label class="mt-4">Codigo</label>
+            <input type="number" name="codigo" #codigo="ngModel"  class ="rounded border border-1  form-control" [(ngModel)]="agenteTransito.codigo" required/>
+            
+        
+            <label class="mt-4">Nombre</label>
+            <input type="text" name="nombre" #nombre="ngModel" class ="rounded border border-1   form-control" [(ngModel)]="agenteTransito.nombre"  required/>
+            
+
+            <label class="mt-4">Años de experiencia</label>
+            <input type="number" name="yearExperience" #yearExperience="ngModel" class ="rounded border border-1   form-control" [(ngModel)]="agenteTransito.yearExperience" required/>
+            
+
+            <label class="mt-4">Codigo de transito</label>
+            <input type="text" name="codigoTransito" #codigoTransito="ngModel" class ="rounded border border-1   form-control" [(ngModel)]="agenteTransito.codigoTransito" required/>
+            
+            
+            
+
+            <div class="container mt-5">
+                <input type="submit" class="btn-primary rounded boder boder-1  mb-5" value="Enviar" [disabled]="!agenteForm.form.valid">
+            </div>  
+        </form>
+    </ng-container>
+    <ng-template #box>
+
+
+        <h1 class="h3 text-center">Actualizacion de Agente de transito</h1>
+        <form  #agenteForm="ngForm" (ngSubmit)="onSubmitActualizar(agenteForm)"  >
+
+            <label>Vias disponibles</label>
+            <select class="form-select form-control" name="identificador" #identificador="ngModel" [(ngModel)]="via.identificador" value={{agenteTransito.via.identificador}}  required>
+                <option value={{v.identificador}} *ngFor="let v of vias">{{v.identificador}}  {{v.calleCarrera}}  {{v.numero}}</option>    
+            </select>
+
+            <label class="mt-4">Codigo</label>
+            <input type="number" name="codigo" #codigo="ngModel"  class ="rounded border border-1  form-control" [(ngModel)]="agenteTransito.codigo" value={{agenteTransito.codigo}} required/>
+            
+        
+            <label class="mt-4">Nombre</label>
+            <input type="text" name="nombre" #nombre="ngModel" class ="rounded border border-1   form-control" [(ngModel)]="agenteTransito.nombre" value={{agenteTransito.nombre}} required/>
+            
+
+            <label class="mt-4">Años de experiencia</label>
+            <input type="number" name="yearExperience" #yearExperience="ngModel" class ="rounded border border-1   form-control" [(ngModel)]="agenteTransito.yearExperience" value={{agenteTransito.yearExperience}} required/>
+            
+
+            <label class="mt-4">Codigo de transito</label>
+            <input type="text" name="codigoTransito" #codigoTransito="ngModel" class ="rounded border border-1   form-control" [(ngModel)]="agenteTransito.codigoTransito" value={{agenteTransito.codigoTransito}} required/>
+            
+            
+
+            <div class="container mt-5">
+                <input type="submit" class="btn-primary rounded boder boder-1  mb-5" value="Actualizar" [disabled]="!agenteForm.form.valid">
+            </div>  
+        </form>
+
+
+    </ng-template>
+
+</div>
+
+</section>

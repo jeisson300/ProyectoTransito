@@ -1,0 +1,13 @@
+package project.transito.dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
+
+import project.transito.models.AgenteTransito;
+
+
+@Component
+public interface AgenteTransitoDao extends JpaRepository<AgenteTransito, Integer>{
+	
+
+}

@@ -1,0 +1,13 @@
+package project.transito.models;
+
+import java.util.List;
+
+import javax.persistence.ElementCollection;
+
+public class Historial {
+	
+	
+	@ElementCollection
+	private List<Via> vias;
+
+}

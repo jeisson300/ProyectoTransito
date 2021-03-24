@@ -1,0 +1,108 @@
+package com.example.demo;
+
+import javax.transaction.Transactional;
+
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import project.transito.models.AgenteTransito;
+import project.transito.models.Via;
+import project.transito.service.AgenteTransitoService;
+import project.transito.service.ViaService;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@ContextConfiguration(classes = {ConfigurationSpring.class})
+class ProjectTransitoApplicationTests {
+	
+	
+	@Autowired
+	private ViaService viaService;
+	
+	@Autowired
+	private AgenteTransitoService agenteTransitoService;
+	
+	
+	
+	//---- metodos de prueba de la via-----//
+	
+	@Test
+	public void addVia()
+	{
+		Via via = new Via();
+		via.setCalleCarrera("calle");
+		via.setNivelCongestion(45.2);
+		via.setTipo("Autopista");
+		via.setNumero(100);
+		
+		viaService.add(via);
+		
+		
+	}
+	
+	@Test
+	public void deleteVia()
+	{
+		viaService.delete(1);
+	}
+	
+	@Test
+	public void updateVia()
+	{
+		Via via = new Via();
+		via.setCalleCarrera("carrera");
+		via.setNivelCongestion(30.2);
+		via.setTipo("Carrete secundaria");
+		via.setNumero(99);
+		via.setIdentificador(2);
+		
+		viaService.update(via);	
+	}
+	
+	@Test
+	@Transactional
+	public void searchVia()
+	{
+		
+		System.out.println(viaService.search(2));
+		
+	}
+	
+	@Test
+	@Transactional
+	public void listVia()
+	{
+		System.out.println(viaService.list());
+	}
+	
+	//---- metodos de prueba del agente de transito------//
+
+	public void addAgente()
+	{
+		Via via = viaService.search(2);
+		AgenteTransito agenteTransito = new AgenteTransito();
+		
+	}
+	
+	public void delelteAgente()
+	{
+		
+	}
+	
+	public void updateAgente()
+	{
+		
+	}
+	public void searchAgente()
+	{
+		
+	}
+	public void listAgente()
+	{
+		
+	}
+}

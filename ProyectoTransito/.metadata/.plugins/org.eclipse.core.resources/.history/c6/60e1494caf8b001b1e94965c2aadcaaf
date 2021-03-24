@@ -1,0 +1,46 @@
+package project.transito.models;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+
+import org.springframework.validation.annotation.Validated;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import lombok.Data;
+
+@Entity
+@Table (name="via")
+@Validated
+@Data 
+@NamedQueries({
+	@NamedQuery(name=Via.LIST_VIA_APTAS, query="select v from  Via v where v.nivelCongestion >30")
+})
+public class Via implements Serializable{
+	
+	
+	private static final long serialVersionUID = 3418791033240490232L;
+
+	public static final String  LIST_VIA_APTAS ="LIST_VIA_APTAS";
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int identificador;
+	
+	@NotEmpty
+	private String tipo;
+	@NotEmpty
+	private String CalleCarrera;
+	
+	private double nivelCongestion;
+	
+	private int numero;
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy = "via")
+	private List<AgenteTransito>listAgente;
+
+}

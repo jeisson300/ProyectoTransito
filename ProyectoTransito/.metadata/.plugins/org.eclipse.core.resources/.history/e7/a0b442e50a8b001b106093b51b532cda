@@ -1,0 +1,15 @@
+package project.transito.models;
+
+import javax.persistence.*;
+
+import org.springframework.validation.annotation.Validated;
+
+import lombok.Data;
+
+@Entity
+@Table (name="via")
+@Validated
+@Data 
+public class Via {
+
+}

@@ -1,0 +1,10 @@
+package project.transito.models;
+
+
+@Entity
+@Table (name="via")
+@Validated
+@Data 
+public class Via {
+
+}

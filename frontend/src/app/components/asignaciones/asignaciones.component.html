@@ -1,0 +1,92 @@
+<section class="container">
+
+    <ng-container *ngIf="validar==0 else box">
+    <h1 class="h3 text-center">Historial de Agente de transito</h1>
+    <form  #agenteForm="ngForm" (ngSubmit)="onSubmit(agenteForm)"  >
+
+        <label class="mt-4">Codigo</label>
+        <input type="number" name="codigo" #codigo="ngModel"  class ="rounded border border-1  form-control" [(ngModel)]="agenteTransito.codigo" value={{agenteTransito.codigo}} required/>
+        
+
+        <div class="container mt-5">
+            <input type="submit" class="btn-primary rounded boder boder-1  mb-5" value="Actualizar" [disabled]="!agenteForm.form.valid">
+        </div>  
+    </form>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+
+                    <th>Identificador</th>
+                    <th>Tipo</th>
+                    <th>Calle o carrera</th>
+                    <th>Nivel de congestion</th>
+                    <th>Numero</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let v of vias">
+            <tr >
+                <th>{{v.identificador}}</th>
+                <th>{{v.tipo}}</th>
+                <th>{{v.calleCarrera}}</th>
+                <th>{{v.nivelCongestion}}</th>
+                <th>{{v.numero}}</th>
+           </tr>
+        </tbody>
+        </table>
+    </div>
+    <div class="container">
+        
+        <button class=" btn btn-primary border rounded mx-2"[routerLink]="['/agentes']">Agentes de transito</button>
+    </div>
+</ng-container>
+<ng-template #box>
+    <h1 class="h3 text-center">Historial de Vias</h1>
+    <form  #agenteForm="ngForm" (ngSubmit)="onSubmitVia(agenteForm)">
+        
+
+        <select class="form-select form-control mt-4" name="calleCarrera" #calleCarrera="ngModel" [(ngModel)]="via.calleCarrera" required>
+            <option value="Calle">Calle</option>
+            <option value="Carrera">Carrera</option>
+        </select>
+
+        <label class="mt-4">Numero</label>
+            <input type="number" name="numero" #numero="ngModel" class ="rounded border border-1   form-control" [(ngModel)]="via.numero" required/>
+            
+
+        <div class="container mt-5">
+            <input type="submit" class="btn-primary rounded boder boder-1  mb-5" value="Actualizar" [disabled]="!agenteForm.form.valid">
+        </div>  
+    </form>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+
+                    <th>Codigo</th>
+                    <th>nombre</th>
+                    <th>años de experiencia</th>
+                    <th>codigo de transito</th>
+                    <th>Via</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let a of agentes">
+                <tr>
+                    <th>{{a.codigo}}</th>
+                    <th>{{a.nombre}}</th>
+                    <th>{{a.yearExperience}}</th>
+                    <th>{{a.codigoTransito}}</th>
+                    <th>{{a.via.identificador}}</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        
+        <button class=" btn btn-primary border rounded mx-2"[routerLink]="['/vias']">Vías</button>
+    </div>
+
+
+</ng-template>
+
+</section>

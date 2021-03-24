@@ -1,0 +1,162 @@
+package project.transito.service;
+
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import project.transito.dao.AgenteTransitoDao;
+import project.transito.dao.HistorialDao;
+import project.transito.models.AgenteTransito;
+import project.transito.models.Historial;
+import project.transito.models.Via;
+
+@Service
+public class AgenteTransitoServiceImpl implements AgenteTransitoService{
+	
+	//--- inyeccion de dependencias
+	
+	@PersistenceContext
+	public EntityManager entityManager;
+	
+	
+	@Autowired
+	@Qualifier("agenteTransitoDao")
+	public AgenteTransitoDao agenteTransitoDao;
+	
+	
+	@Autowired
+	@Qualifier("historialDao")
+	public HistorialDao historialDao;
+	
+	//implementacion para agregar un agente de transito
+
+	@Override
+	@Transactional
+	public boolean add(AgenteTransito agenteTransito) {
+		// TODO Auto-generated method stub
+		boolean validar =false;
+		
+		if(search(agenteTransito.getCodigo())==null)
+		{
+			addHistorial(agenteTransito.getCodigo(), agenteTransito.getVia().getIdentificador());
+			agenteTransitoDao.save(agenteTransito);
+			validar = true;
+		}
+		return validar;
+	}
+	
+	
+	//implementacion  para borrar un agente de transito
+
+	@Override
+	@Transactional
+	public boolean delete(int code) {
+		// TODO Auto-generated method stub
+		boolean validar =false;
+		if(search(code)!=null)
+		{
+			agenteTransitoDao.deleteById(code);
+			validar = true;
+		}
+		
+		return validar;
+	}
+	
+	
+	//implementacion para actualizar un agente de transito
+
+	@Override
+	@Transactional
+	public boolean update(AgenteTransito agenteTransito) {
+		// TODO Auto-generated method stub
+		boolean validar = false;
+		if(search(agenteTransito.getCodigo())!=null)
+		{
+			addHistorial(agenteTransito.getCodigo(), agenteTransito.getVia().getIdentificador());
+			entityManager.merge(agenteTransito);
+			validar = true;
+		}
+		return validar;
+	}
+	
+	//implementacion para buscar un agente de transito
+
+	@Override
+	@Transactional
+	public AgenteTransito search(int code) {
+		// TODO Auto-generated method stub
+		
+		return agenteTransitoDao.findById(code).orElse(null);
+	}
+	
+	
+	//implementacion para listar los agentes de transito
+	
+	@Override
+	@Transactional
+	public List<AgenteTransito> list() {
+		// TODO Auto-generated method stub
+		return agenteTransitoDao.findAll();
+	}
+	
+	
+
+	
+	//---- persistencia del historial de asignacion---//
+	
+	
+	@Override
+	@Transactional
+	public void addHistorial(int code, int identificador)
+	{
+		Historial historial = new Historial();
+		
+		historial.setCodigoAgente(code);
+		historial.setCodigoVia(identificador);
+		
+		historialDao.save(historial);	
+	}
+
+	
+	//implementacion para la validacion de la asignacion de una via a un agente de transito
+	
+	@Override
+	@Transactional
+	public boolean validateVia(int code) {
+		// TODO Auto-generated method stub
+		boolean validar =false;
+		try
+		{
+			TypedQuery<Via> v = entityManager.createNamedQuery(AgenteTransito.VALIDATE_CODE_VIA, Via.class);
+			v.setParameter("codigo", code);
+			Via via =v.getSingleResult();
+			if(via!=null)
+			{
+				validar=true;
+			}
+		}catch(Exception e)
+		{
+			validar=false;
+		}
+		
+		return validar;
+	}
+	
+	
+	
+	
+	
+
+
+
+}

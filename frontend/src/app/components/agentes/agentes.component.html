@@ -1,0 +1,36 @@
+<section class="container">
+
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+
+                    <th>Codigo</th>
+                    <th>nombre</th>
+                    <th>años de experiencia</th>
+                    <th>codigo de transito</th>
+                    <th>Via</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let a of agenteTransito">
+                <tr>
+                    <th>{{a.codigo}}</th>
+                    <th>{{a.nombre}}</th>
+                    <th>{{a.yearExperience}}</th>
+                    <th>{{a.codigoTransito}}</th>
+                    <th>{{a.via.identificador}}</th>
+                    <th><button class="col btn btn-danger border rounded mx-2" (click)="eliminar(a.codigo)" >Eliminar</button></th>
+                    <th><button class="col btn btn-primary border rounded mx-2" (click)="editar(a.codigo)">Editar</button></th>
+               
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <button class=" btn btn-primary border rounded mx-2" [routerLink]="['/crearAgente']">+ Agregar Agentes de Tránsito</button>
+        <button class=" btn btn-primary border rounded mx-2"[routerLink]="['/vias']">Vías</button>
+        <button class=" btn btn-primary border rounded mx-2"[routerLink]="['/asignaciones']">Historial  Agentes</button>
+    </div>
+
+   
+</section>

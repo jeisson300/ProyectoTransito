@@ -1,0 +1,63 @@
+package project.transito.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Service;
+
+import project.transito.models.AgenteTransito;
+import project.transito.models.Historial;
+import project.transito.models.Via;
+
+@Service
+public class HistorialServiceImpl implements HistorialService{
+	
+	@PersistenceContext
+	public EntityManager entityManager;
+	
+	
+	//metodo para filtrar vias por medio del codigo del agente de transito
+	@Override
+	@Transactional
+	public List<Via> listVias(int code) {
+		// TODO Auto-generated method stub
+		TypedQuery<Integer> v = entityManager.createNamedQuery(Historial.LIST_CODE, Integer.class);
+		v.setParameter("code", code);
+		List<Integer> codeVias = v.getResultList();
+		List<Via>vias = new ArrayList<>();
+		
+		for (Integer codigo : codeVias) {
+			TypedQuery<Via>via = entityManager.createNamedQuery(Via.LIST_VIA_CODE, Via.class);
+			via.setParameter("code", codigo);
+			vias.add(via.getSingleResult());
+		}
+	
+		return vias;
+	}
+
+	@Override
+	@Transactional
+	public List<AgenteTransito> listAgente(String tipocalle, int numero) {
+		// TODO Auto-generated method stub
+		TypedQuery<Integer>v = entityManager.createNamedQuery(Via.LIST_VIA_PARAMS, Integer.class);
+		v.setParameter("tipoCalle", tipocalle);
+		v.setParameter("numero", numero);
+		List<Integer> codeVias = v.getResultList();
+		List<AgenteTransito> agentes = new ArrayList<>();
+		
+		for (Integer codigo: codeVias)
+		{
+			TypedQuery<AgenteTransito> a= entityManager.createNamedQuery(AgenteTransito.LIST_AGENTE_CODIGO, AgenteTransito.class);
+			a.setParameter("codigo", codigo);
+			agentes.add(a.getSingleResult());
+		}
+		
+		return agentes;
+	}
+
+}

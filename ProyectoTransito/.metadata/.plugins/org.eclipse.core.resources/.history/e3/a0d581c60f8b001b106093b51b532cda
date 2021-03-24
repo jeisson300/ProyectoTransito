@@ -1,0 +1,81 @@
+package project.transito.service;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import project.transito.dao.AgenteTransitoDao;
+import project.transito.models.AgenteTransito;
+
+@Service
+public class AgenteTransitoServiceImpl implements AgenteTransitoService{
+	
+	@PersistenceContext
+	public EntityManager entityManager;
+	
+	
+	@Autowired
+	@Qualifier("agenteTransitoDao")
+	public AgenteTransitoDao agenteTransitoDao;
+
+	@Override
+	@Transactional
+	public boolean add(AgenteTransito agenteTransito) {
+		// TODO Auto-generated method stub
+		boolean validar =false;
+		
+		if(search(agenteTransito.getCodigo())==null)
+		{
+			agenteTransitoDao.save(agenteTransito);
+			validar = true;
+		}
+		return validar;
+	}
+
+	@Override
+	@Transactional
+	public boolean delete(int code) {
+		// TODO Auto-generated method stub
+		boolean validar =false;
+		if(search(code)!=null)
+		{
+			agenteTransitoDao.deleteById(code);
+			validar = true;
+		}
+		
+		return validar;
+	}
+
+	@Override
+	@Transactional
+	public boolean update(AgenteTransito agenteTransito) {
+		// TODO Auto-generated method stub
+		boolean validar = false;
+		if(search(agenteTransito.getCodigo())!=null)
+		{
+			entityManager.merge(agenteTransito);
+		}
+		return false;
+	}
+
+	@Override
+	@Transactional
+	public AgenteTransito search(int code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	@Transactional
+	public List<AgenteTransito> list() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

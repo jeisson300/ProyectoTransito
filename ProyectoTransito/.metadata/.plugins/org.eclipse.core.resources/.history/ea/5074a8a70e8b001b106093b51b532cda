@@ -1,0 +1,6 @@
+package project.transito.service;
+
+@Service
+public interface AgenteTransitoService {
+
+}

@@ -1,0 +1,19 @@
+package project.transito.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import project.transito.models.AgenteTransito;
+import project.transito.models.Via;
+
+@Service
+public interface HistorialService {
+	
+	public List<Via> listVias(int code);
+	
+	public List<AgenteTransito> listAgente(String tipocalle, int numero);
+	
+	public boolean delete(int code);
+
+}

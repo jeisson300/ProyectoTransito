@@ -1,0 +1,33 @@
+package project.transito.models;
+
+import java.util.List;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+
+import org.springframework.validation.annotation.Validated;
+
+import lombok.Data;
+
+@Entity
+@Table (name="via")
+@Validated
+@Data 
+public class Via {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int identificador;
+	
+	@NotEmpty
+	private String tipo;
+	@NotEmpty
+	private String CalleCarrera;
+	
+	private double nivelCongestion;
+	
+	private int numero;
+	
+	private List<AgenteTransito>listAgente;
+
+}

@@ -1,0 +1,45 @@
+package project.transito.models;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Data;
+
+@Entity
+@Data
+@Table(name="historico")
+
+@NamedQueries({
+	@NamedQuery(name=Historial.LIST_CODE_VIA, query="Select h.agenteTransito from Historico h where h.agenteTransito.id= :code")
+})
+public class Historial implements Serializable{
+	 
+	 
+	private static final long serialVersionUID = -835552050981144659L;
+	
+	public static final String LIST_CODE_VIA ="LIST_CODE_VIA";
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public int id;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "historialAgentes")
+	private List<AgenteTransito> agentes;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "historialVia")
+	private List<Via> vias;
+
+}

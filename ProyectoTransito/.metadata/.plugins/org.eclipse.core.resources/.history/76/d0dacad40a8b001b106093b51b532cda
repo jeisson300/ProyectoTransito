@@ -1,0 +1,11 @@
+package project.transito.models;
+
+import javax.persistence.*;
+
+@Entity
+@Table (name="via")
+@Validated
+@Data 
+public class Via {
+
+}
